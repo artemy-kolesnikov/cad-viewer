@@ -1,0 +1,13 @@
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource>
+		<file>icons/view-axometric.png</file>
+		<file>icons/view-bottom.png</file>
+		<file>icons/view-front.png</file>
+		<file>icons/view-back.png</file>
+		<file>icons/view-right.png</file>
+		<file>icons/view-left.png</file>
+		<file>icons/view-top.png</file>
+		<file>icons/new_document.png</file>
+		<file>icons/open_document.png</file>
+    </qresource>
+</RCC>

@@ -16,21 +16,20 @@
  * GNU General Public License for more details.
  */
 
-#ifndef MAIN_WINDOW_HEADER
-#define MAIN_WINDOW_HEADER
+#ifndef Gui_MainWindow_H
+#define Gui_MainWindow_H
 
+#include <QDockWidget>
 #include <QMainWindow>
 #include <QMap>
+#include <QMdiArea>
+#include <QMdiSubWindow>
+#include <QMenuBar>
 #include <QStringList>
+#include <QToolBar>
+#include <QTreeView>
 
 #include "gui/model.h"
-
-class QDockWidget;
-class QMdiArea;
-class QMdiSubWindow;
-class QMenuBar;
-class QToolBar;
-class QTreeView;
 
 namespace Gui {
 
@@ -62,12 +61,6 @@ private Q_SLOTS:
     void viewAll();
     void viewAxometric();
 
-    void selectNeutral();
-    void selectVertex();
-    void selectEdge();
-    void selectFace();
-    void selectSolid();
-
 private:
     void createUI();
     void createDockWidget();
@@ -78,9 +71,14 @@ private:
     void disableViewActions();
     void enableViewActions();
 
-    ChildWindow& currentChildWindow() const;
-    Model& currentModel() const;
-    View& currentView() const;
+    const ChildWindow& currentChildWindow() const;
+    ChildWindow& currentChildWindow();
+
+    const Model& currentModel() const;
+    Model& currentModel();
+
+    const View& currentView() const;
+    View& currentView();
 
     QMdiArea* mdiArea;
 
@@ -108,5 +106,4 @@ private:
 
 }
 
-#endif // MAIN_WINDOW_HEADER
-
+#endif // Gui_MainWindow_H

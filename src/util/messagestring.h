@@ -1,5 +1,5 @@
 /*
- * actionlist.h: Class for action list managing
+ * messagestring.h: Class for message string forming
  *
  * This file is a part of the CAD Viewer project
  *
@@ -16,33 +16,33 @@
  * GNU General Public License for more details.
  */
 
-#ifndef Gui_ActionList_H
-#define Gui_ActionList_H
+#ifndef Util_MessageString_H
+#define Util_MessageString_H
 
-#include <QObject>
-#include <QList>
-#include <QAction>
+#include <sstream>
 
-namespace Gui {
+namespace Util {
 
-class ActionList : public QObject {
+class MessageString {
 public:
-    ActionList(QObject* parent = 0);
-    ~ActionList();
+    template <typename T>
+    MessageString& operator << (const T& value) {
+        if (!sstr.str().empty()) {
+            sstr << " ";
+        }
 
-    void addAction(QAction* action);
-    void removeAction(QAction* action);
+        sstr << value;
+        return *this;
+    }
 
-    void setVisible(bool visible);
-    bool isVisible() const;
-
-    void setEnabled(bool enabled);
-    bool isEnabled() const;
+    operator const char* () const {
+        return sstr.str().c_str();
+    }
 
 private:
-    QList<QAction*> actionList;
+    std::stringstream sstr;
 };
 
 }
 
-#endif // Gui_ActionList_H
+#endif // Util_MessageString_H

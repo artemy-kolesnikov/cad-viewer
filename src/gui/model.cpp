@@ -28,27 +28,25 @@ void Model::load(QString& fileName) {
     for (; it != shapes.end(); ++it)
         addShape(Shape(*it));*/
 
-    this->fileName = fileName.toStdString();
+    this->fileName = fileName;
 
     Q_EMIT fileNameChanged(fileName);
 }
 
-void Model::save(QString& fileName)
-{
+void Model::save(QString& fileName) {
 }
 
-void Model::removeShape(const Shape& shape) {
+void Model::removeShape(::Model::Shape::SharedPtr shape) {
     /*int index = shapeList.indexOf(shape);
-    if (index != -1)
-    {
+    if (index != -1) {
         Q_EMIT shapeRemoved(shape);
         shapeList.removeAt(index);
     }*/
 }
 
-void Model::addShape(const Shape& shape) {
-    /*shapeList.push_back(shape);
-    Q_EMIT shapeAdded(shape);*/
+void Model::addShape(::Model::Shape::SharedPtr shape) {
+    shapeList.push_back(shape);
+    Q_EMIT shapeAdded(shape);
 }
 
 }

@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  */
 
-#ifndef INVENTOR_VIEWER_HEADER
-#define INVENTOR_VIEWER_HEADER
+#ifndef Gui_InventorViewer_H
+#define Gui_InventorViewer_H
 
 #include <Inventor/Qt/viewers/SoQtExaminerViewer.h>
 
@@ -49,6 +49,8 @@ Q_SIGNALS:
 class InventorViewer : public SoQtExaminerViewer {
     typedef SoQtExaminerViewer inherited;
 public:
+    typedef boost::shared_ptr<InventorViewer> SharedPtr;
+
     InventorViewer(QWidget* parent = 0);
     ~InventorViewer();
 
@@ -78,5 +80,4 @@ private:
 
 }
 
-#endif // INVENTOR_VIEWER_HEADER
-
+#endif // Gui_InventorViewer_H

@@ -16,26 +16,32 @@
 
 #include "view.h"
 
-#include "gui/cadviewerapplication.h"
-#include "gui/inventorviewer.h"
-
 #include <QDebug>
 #include <QHBoxLayout>
 
 #include <algorithm>
+#include <boost/make_shared.hpp>
 
 #include <Inventor/nodes/SoGroup.h>
 #include <Inventor/nodes/SoTransform.h>
 
+#include "gui/cadviewerapplication.h"
+#include "gui/inventorviewer.h"
+
 namespace Gui {
 
-View::View(QWidget* parent) : QWidget(parent),
-        isShapeManip(false), manipSeted(false) {
+View::View(Model::SharedPtr model, QWidget* parent) :
+        QWidget(parent), model(model) {
     createUI();
+
+    connect(model.get(), SIGNAL(shapeAdded(::Model::Shape::SharedPtr)),
+        this, SLOT(shapeAdded(::Model::Shape::SharedPtr)));
+    connect(model.get(), SIGNAL(shapeRemoved(::Model::Shape::SharedPtr)),
+        this, SLOT(shapeRemoved(::Model::Shape::SharedPtr)));
 }
 
 void View::createUI() {
-    inventorViewer = new InventorViewer(this);
+    inventorViewer = boost::make_shared<InventorViewer>(this);
 
     connect(inventorViewer->getEventObject(), SIGNAL(pathSelected(SoPath*)),
         this, SLOT(pathSelected(SoPath*)));
@@ -47,15 +53,6 @@ void View::createUI() {
     layout->addWidget(inventorViewer->getWidget());
 
     //setMouseTracking(true);
-}
-
-void View::setModel(Model::SharedPtr model) {
-    this->model = model;
-
-    connect(model.get(), SIGNAL(shapeAdded(const Shape&)),
-        this, SLOT(shapeAdded(const Shape&)));
-    connect(model.get(), SIGNAL(shapeRemoved(const Shape&)),
-        this, SLOT(shapeRemoved(const Shape&)));
 }
 
 void View::viewFront() {
@@ -103,10 +100,10 @@ void View::viewAxometric() {
 void View::viewDatumPlane() {
 }
 
-void View::shapeAdded(const Shape& shape) {
+void View::shapeAdded(::Model::Shape::SharedPtr shape) {
 }
 
-void View::shapeRemoved(const Shape& shape) {
+void View::shapeRemoved(::Model::Shape::SharedPtr shape) {
     Q_EMIT selectionChanged();
 }
 

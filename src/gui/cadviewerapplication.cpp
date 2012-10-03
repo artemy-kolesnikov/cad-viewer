@@ -19,24 +19,23 @@
 #include "cadviewerapplication.h"
 
 #include <Inventor/Qt/SoQt.h>
-#include <boost/make_shared.hpp>
 
 #include "gui/mainwindow.h"
 
 namespace Gui {
 
-boost::shared_ptr<MainWindow> CADViewerApplication::mainWindow;
+MainWindow* CadViewerApplication::mainWindow = 0;
 
-CADViewerApplication::CADViewerApplication(int& argc, char* argv[]) :
+CadViewerApplication::CadViewerApplication(int& argc, char* argv[]) :
     QApplication(argc, argv) {
     SoQt::init(argc, argv, argv[0]);
 }
 
-MainWindow& CADViewerApplication::getMainWindow() {
+MainWindow& CadViewerApplication::getMainWindow() {
     if (!mainWindow)
-        mainWindow = boost::make_shared<MainWindow>();
+        mainWindow = new MainWindow();
 
-    return *mainWindow.get();
+    return *mainWindow;
 }
 
 }

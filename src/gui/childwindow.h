@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  */
 
-#ifndef CHILD_WINDOW_HEADER
-#define CHILD_WINDOW_HEADER
+#ifndef Gui_ChildWindow_H
+#define Gui_ChildWindow_H
 
 #include <QCloseEvent>
 #include <QMdiSubWindow>
@@ -36,18 +36,22 @@ public:
     ChildWindow(Model::SharedPtr model, QWidget* parent = 0);
 
     const View& getView() const {
+        assert(view);
         return *view;
     }
 
     View& getView() {
+        assert(view);
         return *view;
     }
 
     const Model& getModel() const {
+        assert(model);
         return *model.get();
     }
 
     Model& getModel() {
+        assert(model);
         return *model.get();
     }
 
@@ -70,4 +74,4 @@ private:
 
 }
 
-#endif // CHILD_WINDOW_HEADER
+#endif // Gui_ChildWindow_H

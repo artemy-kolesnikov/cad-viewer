@@ -16,30 +16,27 @@
  * GNU General Public License for more details.
  */
 
-#ifndef CAD_APPLICATION_HEADER
-#define CAD_APPLICATION_HEADER
+#ifndef Gui_CadViewerApplication_H
+#define Gui_CadViewerApplication_H
 
 #include <QApplication>
-
-#include <boost/shared_ptr.hpp>
 
 namespace Gui {
 
 class MainWindow;
 
-class CADViewerApplication : public QApplication {
+class CadViewerApplication : public QApplication {
     Q_OBJECT
 
 public:
-    CADViewerApplication(int& argc, char* argv[]);
+    CadViewerApplication(int& argc, char* argv[]);
 
     static MainWindow& getMainWindow();
 
 private:
-    static boost::shared_ptr<MainWindow> mainWindow;
+    static MainWindow* mainWindow;
 };
 
 }
 
-#endif // CAD_APPLICATION_HEADER
-
+#endif // Gui_CadViewerApplication_H

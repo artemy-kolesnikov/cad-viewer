@@ -31,12 +31,9 @@ ChildWindow::ChildWindow(Model::SharedPtr model, QWidget* parent) : QMdiSubWindo
     createUI();
 }
 
-void ChildWindow::createUI()
-{
-    view = new View(this);
+void ChildWindow::createUI() {
+    view = new View(model, this);
     setWidget(view);
-
-    view->setModel(model);
 
     connect(view, SIGNAL(selectionChanged()),
         this, SIGNAL(selectionChanged()));

@@ -8,12 +8,13 @@ find_package(Qt4 REQUIRED)
 
 include(${QT_USE_FILE})
 
-#qt4_add_resources(CAD_RCS cad.qrc)
-
 set (CMAKE_BUILD_TYPE "Release")
 set (CMAKE_CXX_FLAGS "-Wall")
 
 set (SRC_DIR ../src)
+set (RES_DIR ../res)
+
+qt4_add_resources(CAD_RCS ${RES_DIR}/cad-viewer.qrc)
 
 set(SOURCES
     ${SRC_DIR}/gui/actionlist.cpp
@@ -23,6 +24,7 @@ set(SOURCES
     ${SRC_DIR}/gui/mainwindow.cpp
     ${SRC_DIR}/gui/mainwindow_ui.cpp
     ${SRC_DIR}/gui/model.cpp
+    ${SRC_DIR}/gui/version.cpp
     ${SRC_DIR}/gui/view.cpp
     ${SRC_DIR}/main.cpp
 	${CAD_RCS}

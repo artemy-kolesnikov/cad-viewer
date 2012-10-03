@@ -1,5 +1,7 @@
 /*
- * CAD Viewer
+ * main.cpp: main function
+ *
+ * This file is a part of the CAD Viewer project
  *
  * Copyright (C) 2012 Artemy Kolesnikov <artemy.kolesnikov@gmail.com>
  *
@@ -29,35 +31,36 @@
 #endif
 
 int main(int argc, char *argv[]) {
-	try {
-		Gui::CADViewerApplication app(argc, argv);
+    try {
+        Gui::CadViewerApplication app(argc, argv);
 
-		Gui::CADViewerApplication::setStyle(new QPlastiqueStyle());
+        Gui::CadViewerApplication::setStyle(new QPlastiqueStyle());
 
-		setlocale(LC_ALL, "rus_rus");
-		setlocale(LC_NUMERIC, "English");
-		setlocale(LC_TIME, "English");
+        setlocale(LC_ALL, "rus_rus");
+        setlocale(LC_NUMERIC, "English");
+        setlocale(LC_TIME, "English");
 
-		QTextCodec::setCodecForTr(QTextCodec::codecForName("utf-8"));
-		QTextCodec::setCodecForLocale(QTextCodec::codecForName("utf-8"));
-		QTextCodec::setCodecForCStrings(QTextCodec::codecForName("utf-8"));
+        QTextCodec::setCodecForTr(QTextCodec::codecForName("utf-8"));
+        QTextCodec::setCodecForLocale(QTextCodec::codecForName("utf-8"));
+        QTextCodec::setCodecForCStrings(QTextCodec::codecForName("utf-8"));
 
-		Gui::MainWindow& win = Gui::CADViewerApplication::getMainWindow();
-		win.show();
+        Gui::MainWindow& win = Gui::CadViewerApplication::getMainWindow();
+        win.show();
 
-		QStringList args;
-		if (argc > 1) {
-			for (int i = 1; i < argc; ++i)
-				args << argv[i];
-		}
+        QStringList args;
+        if (argc > 1) {
+            for (int i = 1; i < argc; ++i) {
+                args << argv[i];
+            }
+        }
 
-		win.openFiles(args);
+        win.openFiles(args);
 
-		return app.exec();
-	} catch(...) {
-		QMessageBox::critical(0, QObject::tr("Error"),
-			QObject::tr("Unhandled exception"));
-		return -1;
-	}
+        return app.exec();
+    } catch(...) {
+        QMessageBox::critical(0, QObject::tr("Error"),
+        QObject::tr("Unhandled exception"));
+        return -1;
+    }
 }
 

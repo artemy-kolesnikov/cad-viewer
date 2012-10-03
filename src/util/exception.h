@@ -1,5 +1,5 @@
 /*
- * actionlist.h: Class for action list managing
+ * exception.h: Base class for exception
  *
  * This file is a part of the CAD Viewer project
  *
@@ -16,33 +16,25 @@
  * GNU General Public License for more details.
  */
 
-#ifndef Gui_ActionList_H
-#define Gui_ActionList_H
+#ifndef Util_Exception_H
+#define Util_Exception_H
 
-#include <QObject>
-#include <QList>
-#include <QAction>
+#include <exception>
+#include <string>
 
-namespace Gui {
+namespace Util {
 
-class ActionList : public QObject {
+class Exception : public std::exception {
 public:
-    ActionList(QObject* parent = 0);
-    ~ActionList();
+    Exception(const std::string& aWhat) : what(aWhat) {}
+    ~Exception() throw() {}
 
-    void addAction(QAction* action);
-    void removeAction(QAction* action);
-
-    void setVisible(bool visible);
-    bool isVisible() const;
-
-    void setEnabled(bool enabled);
-    bool isEnabled() const;
+    const char* what() { return what.c_str(); }
 
 private:
-    QList<QAction*> actionList;
+    std::string what;
 };
 
 }
 
-#endif // Gui_ActionList_H
+#endif // Util_Exception_H

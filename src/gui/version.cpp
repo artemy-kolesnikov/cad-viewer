@@ -1,5 +1,5 @@
 /*
- * actionlist.h: Class for action list managing
+ * version.cpp: Version number
  *
  * This file is a part of the CAD Viewer project
  *
@@ -16,33 +16,12 @@
  * GNU General Public License for more details.
  */
 
-#ifndef Gui_ActionList_H
-#define Gui_ActionList_H
-
-#include <QObject>
-#include <QList>
-#include <QAction>
+#include "gui/version.h"
 
 namespace Gui {
 
-class ActionList : public QObject {
-public:
-    ActionList(QObject* parent = 0);
-    ~ActionList();
-
-    void addAction(QAction* action);
-    void removeAction(QAction* action);
-
-    void setVisible(bool visible);
-    bool isVisible() const;
-
-    void setEnabled(bool enabled);
-    bool isEnabled() const;
-
-private:
-    QList<QAction*> actionList;
-};
+const int VERSION_MAJOR = 0;
+const int VERSION_MINOR = 1;
 
 }
 
-#endif // Gui_ActionList_H

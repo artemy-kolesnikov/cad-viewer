@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  */
 
-#ifndef MODEL_HEADER
-#define MODEL_HEADER
+#ifndef Gui_Model_H
+#define Gui_Model_H
 
 #include <QObject>
 #include <QList>
@@ -27,8 +27,7 @@
 #include <map>
 #include <memory>
 
-class Shape {
-};
+#include "model/shape.h"
 
 namespace Gui {
 
@@ -38,20 +37,20 @@ class Model : public QObject {
 public:
     typedef boost::shared_ptr<Model> SharedPtr;
 
-    std::string getFileName() const {
+    QString getFileName() const {
         return fileName;
     }
 
-    const std::list<Shape>& getShapes() const {
+    const std::list< ::Model::Shape::SharedPtr >& getShapes() const {
         return shapeList;
     }
 
-    void removeShape(const Shape& shape);
-    void addShape(const Shape& shape);
+    void removeShape(::Model::Shape::SharedPtr shape);
+    void addShape(::Model::Shape::SharedPtr shape);
 
 Q_SIGNALS:
-    void shapeAdded(const Shape& shape);
-    void shapeRemoved(const Shape& shape);
+    void shapeAdded(::Model::Shape::SharedPtr shape);
+    void shapeRemoved(::Model::Shape::SharedPtr shape);
     void fileNameChanged(QString& newFileName);
 
 public Q_SLOTS:
@@ -59,11 +58,10 @@ public Q_SLOTS:
     void save(QString& fileName);
 
 private:
-    std::string fileName;
-    std::list<Shape> shapeList;
+    QString fileName;
+    std::list< ::Model::Shape::SharedPtr > shapeList;
 };
 
 }
 
-#endif // MODEL_HEADER
-
+#endif // Gui_Model_H

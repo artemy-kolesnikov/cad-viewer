@@ -31,6 +31,8 @@
 #include "gui/childwindow.h"
 #include "gui/model.h"
 #include "gui/view.h"
+#include "gui/actionlist.h"
+#include "gui/version.h"
 
 namespace Gui {
 
@@ -52,26 +54,39 @@ void MainWindow::openFiles(QStringList& files) {
     }
 }
 
-ChildWindow& MainWindow::currentChildWindow() const {
+const ChildWindow& MainWindow::currentChildWindow() const {
     assert(currentChild);
     return *currentChild;
 }
 
-Model& MainWindow::currentModel() const {
-    /*const ChildWindow& window = currentChildWindow();
-    Model* model = window.getView().getModel();
-    assert(model);
-    return *model;*/
+ChildWindow& MainWindow::currentChildWindow() {
+    assert(currentChild);
+    return *currentChild;
 }
 
-View& MainWindow::currentView() const {
-    /*const ChildWindow& window = currentChildWindow();
-    return window.getView();*/
+const Model& MainWindow::currentModel() const {
+    const ChildWindow& window = currentChildWindow();
+    return window.getModel();
+}
+
+Model& MainWindow::currentModel() {
+    ChildWindow& window = currentChildWindow();
+    return window.getModel();
+}
+
+const View& MainWindow::currentView() const {
+    const ChildWindow& window = currentChildWindow();
+    return window.getView();
+}
+
+View& MainWindow::currentView() {
+    ChildWindow& window = currentChildWindow();
+    return window.getView();
 }
 
 void MainWindow::about() {
-    //QString msg(tr("SimpleCAD %1.%2").arg(VERSION_MAJOR).arg(VERSION_MINOR));
-    //QMessageBox::information(this, tr("О программе"), msg);
+    QString msg(tr("CAD Viewer %1.%2").arg(VERSION_MAJOR).arg(VERSION_MINOR));
+    QMessageBox::information(this, tr("About..."), msg);
 }
 
 void MainWindow::openModel() {
@@ -178,40 +193,12 @@ void MainWindow::viewAxometric() {
     window.getView().viewAxometric();
 }
 
-void MainWindow::selectNeutral() {
-    //Model& model = currentModel();
-    //if (model)
-        //model->selectNeutral();
-}
-
-void MainWindow::selectVertex() {
-    //const Model& model = currentModel();
-    //if (model)
-        //model->selectVertex();
-}
-
-void MainWindow::selectEdge() {
-    //const Model& model = currentModel();
-    //if (model)
-        //model->selectEdge();
-}
-
-void MainWindow::selectFace() {
-    //const Model& model = currentModel();
-    //if (model)
-        //model->selectFace();
-}
-
-void MainWindow::selectSolid() {
-    //const Model& model = currentModel();
-    //if (model)
-        //model->selectSolid();
-}
-
 void MainWindow::disableViewActions() {
+    acListViewType->setEnabled(false);
 }
 
 void MainWindow::enableViewActions() {
+    acListViewType->setEnabled(true);
 }
 
 }

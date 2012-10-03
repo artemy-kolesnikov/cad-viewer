@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  */
 
-#ifndef VIEW_HEADER
-#define VIEW_HEADER
+#ifndef Gui_View_H
+#define Gui_View_H
 
 #include <QPaintEvent>
 #include <QPoint>
@@ -25,29 +25,20 @@
 
 #include <boost/shared_ptr.hpp>
 
+#include "gui/inventorviewer.h"
 #include "gui/model.h"
+#include "model/shape.h"
 
 class SoPath;
 
 namespace Gui {
 
-class InventorViewer;
 class Model;
 
 class View : public QWidget {
     Q_OBJECT
 public:
-    View(QWidget* parent = 0);
-
-    void setModel(Model::SharedPtr model);
-
-    const Model& getModel() const {
-        return *model.get();
-    }
-
-    Model& getModel() {
-        return *model.get();
-    }
+    View(Model::SharedPtr model, QWidget* parent = 0);
 
 Q_SIGNALS:
     void selectionChanged();
@@ -64,8 +55,8 @@ public Q_SLOTS:
     void viewDatumPlane();
 
 private Q_SLOTS:
-    void shapeAdded(const Shape& shape);
-    void shapeRemoved(const Shape& shape);
+    void shapeAdded(::Model::Shape::SharedPtr shape);
+    void shapeRemoved(::Model::Shape::SharedPtr shape);
     void pathSelected(SoPath* path);
     void pathDeselected(SoPath* path);
 
@@ -73,13 +64,10 @@ private:
     void createUI();
 
     Model::SharedPtr model;
-    InventorViewer* inventorViewer;
-
-    bool isShapeManip;
-    bool manipSeted;
+    InventorViewer::SharedPtr inventorViewer;
 };
 
 }
 
-#endif // VIEW_HEADER
+#endif // Gui_View_H
 

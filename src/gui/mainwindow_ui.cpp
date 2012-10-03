@@ -132,10 +132,10 @@ void MainWindow::createCommonActions() {
     QAction* acExit = new QAction(tr("Выход"), this);
     connect(acExit, SIGNAL(triggered(bool)), qApp, SLOT(quit()));
 
-    QAction* acOpenModel = new QAction(QIcon(":/gui/icons/open_document.png"), tr("Открыть..."), this);
+    QAction* acOpenModel = new QAction(QIcon(":/icons/open_document.png"), tr("Открыть..."), this);
     connect(acOpenModel, SIGNAL(triggered(bool)), this, SLOT(openModel()));
 
-    QAction* acNewModel = new QAction(QIcon(":/gui/icons/new_document.png"), tr("Новый"), this);
+    QAction* acNewModel = new QAction(QIcon(":/icons/new_document.png"), tr("Новый"), this);
     connect(acNewModel, SIGNAL(triggered(bool)), this, SLOT(newChildWindow()));
 
     fileMenu->addAction(acNewModel);
@@ -155,7 +155,7 @@ void MainWindow::createCommonActions() {
 void MainWindow::createViewActions() {
     QActionGroup* viewGroup = new QActionGroup(this);
 
-    QAction* acViewFront = new QAction(QIcon(":/gui/icons/view-front.png"), tr("Спереди"), this);
+    QAction* acViewFront = new QAction(QIcon(":/icons/view-front.png"), tr("Спереди"), this);
     acViewFront->setCheckable(true);
     viewMenu->addAction(acViewFront);
     connect(acViewFront, SIGNAL(triggered()), this, SLOT(viewFront()));
@@ -163,7 +163,7 @@ void MainWindow::createViewActions() {
     mainToolBar->addAction(acViewFront);
     acListViewType->addAction(acViewFront);
 
-    QAction* acViewBack = new QAction(QIcon(":/gui/icons/view-back.png"), tr("Сзади"), this);
+    QAction* acViewBack = new QAction(QIcon(":/icons/view-back.png"), tr("Сзади"), this);
     acViewBack->setCheckable(true);
     viewMenu->addAction(acViewBack);
     connect(acViewBack, SIGNAL(triggered()), this, SLOT(viewBack()));
@@ -171,7 +171,7 @@ void MainWindow::createViewActions() {
     mainToolBar->addAction(acViewBack);
     acListViewType->addAction(acViewBack);
 
-    QAction* acViewTop = new QAction(QIcon(":/gui/icons/view-top.png"), tr("Сверху"), this);
+    QAction* acViewTop = new QAction(QIcon(":/icons/view-top.png"), tr("Сверху"), this);
     acViewTop->setCheckable(true);
     viewMenu->addAction(acViewTop);
     connect(acViewTop, SIGNAL(triggered()), this, SLOT(viewTop()));
@@ -179,7 +179,7 @@ void MainWindow::createViewActions() {
     mainToolBar->addAction(acViewTop);
     acListViewType->addAction(acViewTop);
 
-    QAction* acViewBottom = new QAction(QIcon(":/gui/icons/view-bottom.png"), tr("Снизу"), this);
+    QAction* acViewBottom = new QAction(QIcon(":/icons/view-bottom.png"), tr("Снизу"), this);
     acViewBottom->setCheckable(true);
     viewMenu->addAction(acViewBottom);
     connect(acViewBottom, SIGNAL(triggered()), this, SLOT(viewBottom()));
@@ -187,7 +187,7 @@ void MainWindow::createViewActions() {
     mainToolBar->addAction(acViewBottom);
     acListViewType->addAction(acViewBottom);
 
-    QAction* acViewLeft = new QAction(QIcon(":/gui/icons/view-left.png"), tr("Слева"), this);
+    QAction* acViewLeft = new QAction(QIcon(":/icons/view-left.png"), tr("Слева"), this);
     acViewLeft->setCheckable(true);
     viewMenu->addAction(acViewLeft);
     connect(acViewLeft, SIGNAL(triggered()), this, SLOT(viewLeft()));
@@ -195,7 +195,7 @@ void MainWindow::createViewActions() {
     mainToolBar->addAction(acViewLeft);
     acListViewType->addAction(acViewLeft);
 
-    QAction* acViewRight = new QAction(QIcon(":/gui/icons/view-right.png"), tr("Справа"), this);
+    QAction* acViewRight = new QAction(QIcon(":/icons/view-right.png"), tr("Справа"), this);
     acViewRight->setCheckable(true);
     viewMenu->addAction(acViewRight);
     connect(acViewRight, SIGNAL(triggered()), this, SLOT(viewRight()));
@@ -203,7 +203,7 @@ void MainWindow::createViewActions() {
     mainToolBar->addAction(acViewRight);
     acListViewType->addAction(acViewRight);
 
-    QAction* acAxometric = new QAction(QIcon(":/gui/icons/view-axometric.png"), tr("Аксометрически"), this);
+    QAction* acAxometric = new QAction(QIcon(":/icons/view-axometric.png"), tr("Аксометрически"), this);
     acAxometric->setCheckable(true);
     viewMenu->addAction(acAxometric);
     connect(acAxometric, SIGNAL(triggered()), this, SLOT(viewAxometric()));
@@ -211,7 +211,7 @@ void MainWindow::createViewActions() {
     mainToolBar->addAction(acAxometric);
     acListViewType->addAction(acAxometric);
 
-    QAction* acViewAll = new QAction(QIcon(":/gui/icons/view-all.png"), tr("Смотреть всё"), this);
+    QAction* acViewAll = new QAction(QIcon(":/icons/view-all.png"), tr("Смотреть всё"), this);
     viewMenu->addAction(acViewAll);
     connect(acViewAll, SIGNAL(triggered()), this, SLOT(viewAll()));
     acListViewType->addAction(acViewAll);

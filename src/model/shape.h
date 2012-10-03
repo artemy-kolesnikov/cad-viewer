@@ -1,5 +1,5 @@
 /*
- * actionlist.h: Class for action list managing
+ * shape.h: Class for storing shape data
  *
  * This file is a part of the CAD Viewer project
  *
@@ -16,33 +16,27 @@
  * GNU General Public License for more details.
  */
 
-#ifndef Gui_ActionList_H
-#define Gui_ActionList_H
+#ifndef Model_Shape_H
+#define Model_Shape_H
 
-#include <QObject>
-#include <QList>
-#include <QAction>
+#include <boost/shared_ptr.hpp>
 
-namespace Gui {
+namespace Model {
 
-class ActionList : public QObject {
+namespace Impl {
+
+class ShapeImpl;
+
+}
+
+class Shape {
 public:
-    ActionList(QObject* parent = 0);
-    ~ActionList();
-
-    void addAction(QAction* action);
-    void removeAction(QAction* action);
-
-    void setVisible(bool visible);
-    bool isVisible() const;
-
-    void setEnabled(bool enabled);
-    bool isEnabled() const;
+    typedef boost::shared_ptr<Shape> SharedPtr;
 
 private:
-    QList<QAction*> actionList;
+    boost::shared_ptr<Impl::ShapeImpl> pImpl;
 };
 
 }
 
-#endif // Gui_ActionList_H
+#endif // Model_Shape_H

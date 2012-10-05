@@ -27,7 +27,7 @@
 #include <map>
 #include <memory>
 
-#include "model/shape.h"
+#include "modeling/shape.h"
 
 namespace Gui {
 
@@ -41,16 +41,16 @@ public:
         return fileName;
     }
 
-    const std::list< ::Model::Shape::SharedPtr >& getShapes() const {
+    const std::list<Modeling::Shape::SharedPtr>& getShapes() const {
         return shapeList;
     }
 
-    void removeShape(::Model::Shape::SharedPtr shape);
-    void addShape(::Model::Shape::SharedPtr shape);
+    void removeShape(Modeling::Shape::SharedPtr shape);
+    void addShape(Modeling::Shape::SharedPtr shape);
 
 Q_SIGNALS:
-    void shapeAdded(::Model::Shape::SharedPtr shape);
-    void shapeRemoved(::Model::Shape::SharedPtr shape);
+    void shapeAdded(Modeling::Shape::SharedPtr shape);
+    void shapeRemoved(Modeling::Shape::SharedPtr shape);
     void fileNameChanged(QString& newFileName);
 
 public Q_SLOTS:
@@ -59,7 +59,7 @@ public Q_SLOTS:
 
 private:
     QString fileName;
-    std::list< ::Model::Shape::SharedPtr > shapeList;
+    std::list<Modeling::Shape::SharedPtr> shapeList;
 };
 
 }

@@ -16,12 +16,12 @@
  * GNU General Public License for more details.
  */
 
-#ifndef Model_Shape_H
-#define Model_Shape_H
+#ifndef Modeling_Shape_H
+#define Modeling_Shape_H
 
 #include <boost/shared_ptr.hpp>
 
-namespace Model {
+namespace Modeling {
 
 namespace Impl {
 
@@ -39,4 +39,4 @@ private:
 
 }
 
-#endif // Model_Shape_H
+#endif // Modeling_Shape_H

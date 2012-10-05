@@ -26,6 +26,8 @@ set(SOURCES
     ${SRC_DIR}/gui/model.cpp
     ${SRC_DIR}/gui/version.cpp
     ${SRC_DIR}/gui/view.cpp
+    ${SRC_DIR}/gui/viewer/opencascadeviewer.cpp
+    ${SRC_DIR}/gui/viewer/viewer.cpp
     ${SRC_DIR}/main.cpp
 	${CAD_RCS}
 )
@@ -37,13 +39,14 @@ set(HEADERS
     ${SRC_DIR}/gui/mainwindow.h
     ${SRC_DIR}/gui/model.h
     ${SRC_DIR}/gui/view.h
+    ${SRC_DIR}/gui/viewer/viewer.h
 )
 
 if (UNIX)
 	find_package(X11 REQUIRED)
 
 	set(OPENCASCADE_INCLUDE
-		/usr/include/opencascade
+        /usr/include/opencascade
 	)
 endif()
 
@@ -76,6 +79,8 @@ set(OPENCASCADE_LIB
 	TKBO
 	TKFillet
 	TKOffset
+	TKV3d
+	TKV2d
 )
 
 set (coin3d_lib

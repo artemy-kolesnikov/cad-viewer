@@ -36,7 +36,7 @@ void Model::load(QString& fileName) {
 void Model::save(QString& fileName) {
 }
 
-void Model::removeShape(::Model::Shape::SharedPtr shape) {
+void Model::removeShape(Modeling::Shape::SharedPtr shape) {
     /*int index = shapeList.indexOf(shape);
     if (index != -1) {
         Q_EMIT shapeRemoved(shape);
@@ -44,7 +44,7 @@ void Model::removeShape(::Model::Shape::SharedPtr shape) {
     }*/
 }
 
-void Model::addShape(::Model::Shape::SharedPtr shape) {
+void Model::addShape(Modeling::Shape::SharedPtr shape) {
     shapeList.push_back(shape);
     Q_EMIT shapeAdded(shape);
 }

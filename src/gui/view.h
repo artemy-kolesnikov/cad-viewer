@@ -25,9 +25,8 @@
 
 #include <boost/shared_ptr.hpp>
 
-#include "gui/inventorviewer.h"
+#include "gui/viewer/viewer.h"
 #include "gui/model.h"
-#include "model/shape.h"
 
 class SoPath;
 
@@ -54,17 +53,11 @@ public Q_SLOTS:
     void viewAxometric();
     void viewDatumPlane();
 
-private Q_SLOTS:
-    void shapeAdded(::Model::Shape::SharedPtr shape);
-    void shapeRemoved(::Model::Shape::SharedPtr shape);
-    void pathSelected(SoPath* path);
-    void pathDeselected(SoPath* path);
-
 private:
     void createUI();
 
     Model::SharedPtr model;
-    InventorViewer::SharedPtr inventorViewer;
+    Viewer::Viewer::SharedPtr viewer;
 };
 
 }

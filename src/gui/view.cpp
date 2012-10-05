@@ -26,103 +26,67 @@
 #include <Inventor/nodes/SoTransform.h>
 
 #include "gui/cadviewerapplication.h"
-#include "gui/inventorviewer.h"
 
 namespace Gui {
 
 View::View(Model::SharedPtr model, QWidget* parent) :
         QWidget(parent), model(model) {
     createUI();
-
-    connect(model.get(), SIGNAL(shapeAdded(::Model::Shape::SharedPtr)),
-        this, SLOT(shapeAdded(::Model::Shape::SharedPtr)));
-    connect(model.get(), SIGNAL(shapeRemoved(::Model::Shape::SharedPtr)),
-        this, SLOT(shapeRemoved(::Model::Shape::SharedPtr)));
 }
 
 void View::createUI() {
-    inventorViewer = boost::make_shared<InventorViewer>(this);
-
-    connect(inventorViewer->getEventObject(), SIGNAL(pathSelected(SoPath*)),
-        this, SLOT(pathSelected(SoPath*)));
-    connect(inventorViewer->getEventObject(), SIGNAL(pathDeselected(SoPath*)),
-        this, SLOT(pathDeselected(SoPath*)));
+    viewer = Viewer::Viewer::create(model);
 
     QHBoxLayout *layout = new QHBoxLayout(this);
     layout->setContentsMargins(QMargins(0, 0, 0, 0));;
-    layout->addWidget(inventorViewer->getWidget());
+    layout->addWidget(viewer->getWidget());
 
     //setMouseTracking(true);
 }
 
 void View::viewFront() {
-    float root = sqrtf(2.0) / 2.0;
-    inventorViewer->setCameraOrientation(SbRotation(-root, 0, 0, -root));
-    inventorViewer->viewAll();
+    //float root = sqrtf(2.0) / 2.0;
+    //viewer->setCameraOrientation(SbRotation(-root, 0, 0, -root));
+    viewer->viewAll();
 }
 
 void View::viewBack() {
-    float root = sqrtf(2.0) / 2.0;
-    inventorViewer->setCameraOrientation(SbRotation(0, root, root, 0));
-    inventorViewer->viewAll();
+    //float root = sqrtf(2.0) / 2.0;
+    //viewer->setCameraOrientation(SbRotation(0, root, root, 0));
+    viewer->viewAll();
 }
 
 void View::viewTop() {
-    inventorViewer->setCameraOrientation(SbRotation(0, 0, 0, 1));
-    inventorViewer->viewAll();
+    //viewer->setCameraOrientation(SbRotation(0, 0, 0, 1));
+    viewer->viewAll();
 }
 
 void View::viewBottom() {
-    inventorViewer->setCameraOrientation(SbRotation(-1, 0, 0, 0));
-    inventorViewer->viewAll();
+    //viewer->setCameraOrientation(SbRotation(-1, 0, 0, 0));
+    viewer->viewAll();
 }
 
 void View::viewLeft() {
-    inventorViewer->setCameraOrientation(SbRotation(-0.5, 0, 0, -0.5));
-    inventorViewer->viewAll();
+    //viewer->setCameraOrientation(SbRotation(-0.5, 0, 0, -0.5));
+    viewer->viewAll();
 }
 
 void View::viewRight() {
-    inventorViewer->setCameraOrientation(SbRotation(0.5, 0, 0, 0.5));
-    inventorViewer->viewAll();
+    //viewer->setCameraOrientation(SbRotation(0.5, 0, 0, 0.5));
+    viewer->viewAll();
 }
 
 void View::viewAll() {
-    inventorViewer->viewAll();
+    viewer->viewAll();
 }
 
 void View::viewAxometric() {
-    inventorViewer->setCameraOrientation(SbRotation
-        (-0.353553f, -0.146447f, -0.353553f, -0.853553f));
-    inventorViewer->viewAll();
+    //viewer->setCameraOrientation(SbRotation
+        //(-0.353553f, -0.146447f, -0.353553f, -0.853553f));
+    viewer->viewAll();
 }
 
 void View::viewDatumPlane() {
-}
-
-void View::shapeAdded(::Model::Shape::SharedPtr shape) {
-}
-
-void View::shapeRemoved(::Model::Shape::SharedPtr shape) {
-    Q_EMIT selectionChanged();
-}
-
-void View::pathSelected(SoPath* path) {
-    int pathLength = path->getLength();
-    assert(pathLength > 2);
-
-    if (path->getNodeFromTail(0)->getTypeId() == SoTransform::getClassTypeId())
-        return;
-
-    SoNode* node = path->getNodeFromTail(pathLength - 2);
-
-    if (SoGroup::getClassTypeId() == node->getTypeId()) {
-        Q_EMIT selectionChanged();
-    }
-}
-
-void View::pathDeselected(SoPath* path) {
-    Q_EMIT selectionChanged();
 }
 
 }

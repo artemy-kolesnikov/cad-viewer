@@ -19,7 +19,7 @@
 #ifndef Gui_Viewer_OpenCASCADEViewer_H
 #define Gui_Viewer_OpenCASCADEViewer_H
 
-#include "config.h"
+#include "occconfig.h"
 
 #include <AIS_InteractiveContext.hxx>
 #include <V3d_Viewer.hxx>

@@ -9,12 +9,15 @@ find_package(Qt4 REQUIRED)
 include(${QT_USE_FILE})
 
 set (CMAKE_BUILD_TYPE "Release")
-set (CMAKE_CXX_FLAGS "-Wall")
 
 set (SRC_DIR ../src)
 set (RES_DIR ../res)
 
 qt4_add_resources(CAD_RCS ${RES_DIR}/cad-viewer.qrc)
+
+if (UNIX)
+  set (CMAKE_CXX_FLAGS "-Wall")
+endif()
 
 set(SOURCES
     ${SRC_DIR}/gui/actionlist.cpp
@@ -53,34 +56,35 @@ endif()
 find_package(OpenGL REQUIRED)
 
 set(OPENCASCADE_LIB
-	TKernel
 	PTKernel
-	TKG3d
-	TKMath
-	TKBRep
-	TKIGES
-	TKSTL
-	TKSTEP
-	TKSTEPAttr
-	TKSTEP209
-	TKSTEPBase
-	TKShapeSchema
-	TKGeomBase
-	TKGeomAlgo
-	TKXSBase
-	TKPShape
-	TKShHealing
-	TKHLR
-	TKTopAlgo
-	TKMesh
-	TKPrim
-	TKCDF
-	TKBool
 	TKBO
+	TKBRep
+	TKBool
+	TKCDF
 	TKFillet
+	TKG3d
+	TKGeomAlgo
+	TKGeomBase
+	TKHLR
+	TKIGES
+	TKMath
+	TKMesh
 	TKOffset
-	TKV3d
+	TKPShape
+	TKPrim
+	TKSTEP
+	TKSTEP209
+	TKSTEPAttr
+	TKSTEPBase
+	TKSTL
+	TKShHealing
+	TKShapeSchema
+	TKTopAlgo
 	TKV2d
+	TKV3d
+	TKXSBase
+	TKernel
+    TKService
 )
 
 set (coin3d_lib
@@ -96,6 +100,9 @@ if (WIN32)
 		c:/boost_1_46_1/libs
 		c:/SoQt/src
 		c:/coin/include)
+
+	set(BOOST_INCLUDE
+		c:/boost_1_46_1)
 
 	add_definitions(-DWNT)
 	add_definitions(-DWIN32)
@@ -117,7 +124,7 @@ include_directories(${CMAKE_SOURCE_DIR} ${OPENCASCADE_INCLUDE} ${SRC_DIR}
 	${base_directory}/gui/widget
 	${base_directory}/common ${base_directory}/action
 	${base_directory}/sketcher/gui ${base_directory}/sketcher/mod ${base_directory}/gui/command
-	${base_directory}/sketcher/command ${base_directory}/sketcher ${WINDOWS_INCLUDE})
+	${base_directory}/sketcher/command ${base_directory}/sketcher ${WINDOWS_INCLUDE} ${BOOST_INCLUDE})
 
 qt4_wrap_cpp(SOURCES ${HEADERS})
 

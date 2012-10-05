@@ -26,24 +26,33 @@
 #include <V3d_View.hxx>
 #include <Xw_Window.hxx>
 
+#ifdef Q_OS_WIN32
+#include <Graphic3d_WNTGraphicDevice.hxx>
+#include <WNT_Window.hxx>
+#else
 #include <QX11Info>
 #include <X11/Xutil.h>
 #include <X11/Xatom.h>
 #include <X11/Xmu/StdCmap.h>
 #include <X11/Xlib.h>
 #include <Xw_Window.hxx>
+#include <Graphic3d_GraphicDevice.hxx>
+#endif
 
 #include <boost/make_shared.hpp>
 
 namespace {
 
+#ifdef Q_OS_WIN32
+Handle(Graphic3d_WNTGraphicDevice) defaultDevice;
+#else
 Handle(Graphic3d_GraphicDevice) defaultDevice;
+#endif
 
 int paintCallBack(Aspect_Drawable drawable, void* userData,
-	    Aspect_GraphicCallbackStruct* data) {
+        Aspect_GraphicCallbackStruct* data) {
     //Gui::Viewer::OpenCASCADEViewer* viewer = static_cast<Gui::Viewer::OpenCASCADEViewer*>(userData);
     //viewer->paintGl();
-
     return 0;
 }
 
@@ -58,11 +67,10 @@ public:
 
     ViewerWidget(const OpenCASCADEViewer& aViewer) :
             cascadeViewer(aViewer), firstPaint(true) {
-	    XSynchronize(x11Info().display(), true);
     }
 
 protected:
-	void paintEvent(QPaintEvent*);
+    void paintEvent(QPaintEvent*);
 
 private:
     void init();
@@ -83,8 +91,15 @@ void ViewerWidget::init() {
     short hi, lo;
     lo = (short) windowHandle;
     hi = (short) (windowHandle >> 16);
+
+#ifdef Q_OS_WIN32
+    Handle(WNT_Window) hWnd = new WNT_Window(Handle(Graphic3d_WNTGraphicDevice)::DownCast(
+        cascadeViewer.context->CurrentViewer()->Device()),(int) hi,(int) lo);
+#else
     Handle(Xw_Window) hWnd = new Xw_Window(Handle(Graphic3d_GraphicDevice)::DownCast(
         cascadeViewer.context->CurrentViewer()->Device()),(int) hi,(int) lo, Xw_WQ_SAMEQUALITY);
+#endif
+
     view->SetWindow(hWnd, 0, paintCallBack, this);
 
     if (!hWnd->IsMapped()) {
@@ -108,7 +123,11 @@ void ViewerWidget::paintEvent(QPaintEvent*) {
 
 OpenCASCADEViewer::OpenCASCADEViewer(Gui::Model::SharedPtr model) : Viewer(model) {
     if(defaultDevice.IsNull()) {
+#ifdef Q_OS_WIN32
+        defaultDevice = new Graphic3d_WNTGraphicDevice();
+#else
         defaultDevice = new Graphic3d_GraphicDevice(getenv("DISPLAY"));
+#endif
     }
 
     TCollection_ExtendedString v3DName("Visu3D");

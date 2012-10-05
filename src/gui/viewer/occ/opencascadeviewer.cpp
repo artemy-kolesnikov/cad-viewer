@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  */
 
-#include "gui/viewer/opencascadeviewer.h"
+#include "gui/viewer/occ/opencascadeviewer.h"
 
 #include <QPaintEvent>
 
@@ -60,6 +60,7 @@ int paintCallBack(Aspect_Drawable drawable, void* userData,
 
 namespace Gui {
 namespace Viewer {
+namespace OCC {
 
 class ViewerWidget : public QWidget {
 public:
@@ -174,5 +175,6 @@ void OpenCASCADEViewer::shapeAdded(Modeling::Shape::SharedPtr shape) {
 void OpenCASCADEViewer::shapeRemoved(Modeling::Shape::SharedPtr shape) {
 }
 
+}
 }
 }

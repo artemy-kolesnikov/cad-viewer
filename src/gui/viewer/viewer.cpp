@@ -18,7 +18,8 @@
 
 #include "gui/viewer/viewer.h"
 
-#include "gui/viewer/opencascadeviewer.h"
+#include "gui/viewer/inventor/inventorviewer.h"
+#include "gui/viewer/occ/opencascadeviewer.h"
 
 #include <boost/make_shared.hpp>
 
@@ -26,7 +27,7 @@ namespace Gui {
 namespace Viewer {
 
 Viewer::SharedPtr Viewer::create(Gui::Model::SharedPtr model) {
-    return boost::make_shared<OpenCASCADEViewer>(model);
+    return boost::make_shared<Inventor::InventorViewer>(model);
 }
 
 }

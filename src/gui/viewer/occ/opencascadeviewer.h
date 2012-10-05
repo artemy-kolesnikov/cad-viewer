@@ -16,8 +16,8 @@
  * GNU General Public License for more details.
  */
 
-#ifndef Gui_Viewer_OpenCASCADEViewer_H
-#define Gui_Viewer_OpenCASCADEViewer_H
+#ifndef Gui_Viewer_OCC_OpenCASCADEViewer_H
+#define Gui_Viewer_OCC_OpenCASCADEViewer_H
 
 #include "occconfig.h"
 
@@ -31,6 +31,7 @@
 
 namespace Gui {
 namespace Viewer {
+namespace OCC {
 
 class ViewerWidget;
 
@@ -57,5 +58,6 @@ private:
 
 }
 }
+}
 
-#endif // Gui_Viewer_OpenCASCADEViewer_H
+#endif // Gui_Viewer_OCC_OpenCASCADEViewer_H

@@ -24,8 +24,13 @@
 #include <Inventor/nodes/SoEventCallback.h>
 
 #include <boost/make_shared.hpp>
+#include <list>
 
-#include "util/sbscopedptr.h"
+#include "util/soscopedptr.h"
+
+#include "gui/viewer/inventor/inventorshape.h"
+
+using Modeling::Shape;
 
 namespace Gui {
 namespace Viewer {
@@ -44,13 +49,17 @@ public:
         return root.get();
     }
 
+    void addShape(Shape::SharedPtr shape);
+
 private:
     static void eventCallback(void* data, SoEventCallback* callback);
     static void selectionCallback(void* data, SoPath* path);
     static void deselectionCallback(void* data, SoPath* path);
 
 private:
-    Util::SbScopedPtr<SoSelection> root;
+    Util::SoScopedPtr<SoSelection> root;
+
+    std::list<InventorShape::SharedPtr> shapes;
 };
 
 InventorViewerImpl::InventorViewerImpl() :
@@ -59,7 +68,7 @@ InventorViewerImpl::InventorViewerImpl() :
     setBackgroundColor(SbColor(0.39, 0.58, 0.93));
     setCamera(new SoOrthographicCamera());
 
-    root = Util::SbScopedPtr<SoSelection>(new SoSelection());
+    root = Util::SoScopedPtr<SoSelection>(new SoSelection());
     root->addSelectionCallback(&InventorViewerImpl::selectionCallback, this);
     root->addDeselectionCallback(&InventorViewerImpl::deselectionCallback, this);
     setSceneGraph(root.get());
@@ -72,6 +81,16 @@ void InventorViewerImpl::selectionCallback(void* data, SoPath* path) {
 }
 
 void InventorViewerImpl::deselectionCallback(void* data, SoPath* path) {
+}
+
+void InventorViewerImpl::addShape(Shape::SharedPtr shape) {
+    InventorShape::SharedPtr inventorShape = boost::make_shared<InventorShape>(shape);
+
+    root->addChild(inventorShape->getGroup());
+
+    shapes.push_back(inventorShape);
+
+    viewAll();
 }
 
 InventorViewer::InventorViewer(Gui::Model::SharedPtr model) :
@@ -90,10 +109,8 @@ void InventorViewer::viewAll() {
     impl->viewAll();
 }
 
-void InventorViewer::shapeAdded(Modeling::Shape::SharedPtr shape) {
-}
-
-void InventorViewer::shapeRemoved(Modeling::Shape::SharedPtr shape) {
+void InventorViewer::shapeAdded(Shape::SharedPtr shape) {
+    impl->addShape(shape);
 }
 
 }

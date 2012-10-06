@@ -29,11 +29,13 @@ set(SOURCES
     ${SRC_DIR}/gui/model.cpp
     ${SRC_DIR}/gui/version.cpp
     ${SRC_DIR}/gui/view.cpp
+    ${SRC_DIR}/gui/viewer/inventor/inventorshape.cpp
     ${SRC_DIR}/gui/viewer/inventor/inventorviewer.cpp
     ${SRC_DIR}/gui/viewer/occ/opencascadeviewer.cpp
     ${SRC_DIR}/gui/viewer/viewer.cpp
     ${SRC_DIR}/main.cpp
-	${CAD_RCS}
+    ${SRC_DIR}/modeling/fileloader.cpp
+    ${CAD_RCS}
 )
 
 set(HEADERS

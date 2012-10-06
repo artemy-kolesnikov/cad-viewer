@@ -38,8 +38,6 @@ public:
     Viewer(Gui::Model::SharedPtr aMoldel) : model(aMoldel) {
         connect(model.get(), SIGNAL(shapeAdded(Modeling::Shape::SharedPtr)),
             this, SLOT(shapeAdded(Modeling::Shape::SharedPtr)));
-        connect(model.get(), SIGNAL(shapeRemoved(Gui::Modeling::Shape::SharedPtr)),
-            this, SLOT(shapeRemoved(Modeling::Shape::SharedPtr)));
     }
 
     virtual ~Viewer() {}
@@ -53,7 +51,6 @@ public:
 
 private Q_SLOTS:
     virtual void shapeAdded(Modeling::Shape::SharedPtr shape) = 0;
-    virtual void shapeRemoved(Modeling::Shape::SharedPtr shape) = 0;
 
 private:
     Gui::Model::SharedPtr model;

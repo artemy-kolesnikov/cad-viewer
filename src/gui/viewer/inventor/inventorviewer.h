@@ -42,7 +42,6 @@ public:
 
 private:
     virtual void shapeAdded(Modeling::Shape::SharedPtr shape);
-    virtual void shapeRemoved(Modeling::Shape::SharedPtr shape);
 
 private:
     boost::shared_ptr<InventorViewerImpl> impl;

@@ -172,9 +172,6 @@ void OpenCASCADEViewer::shapeAdded(Modeling::Shape::SharedPtr shape) {
     context->UpdateCurrentViewer();*/
 }
 
-void OpenCASCADEViewer::shapeRemoved(Modeling::Shape::SharedPtr shape) {
-}
-
 }
 }
 }

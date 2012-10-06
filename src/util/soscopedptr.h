@@ -1,5 +1,5 @@
 /*
- * sbscopedptr.h: Scoped pointer for Open Inventor nodes
+ * soscopedptr.h: Scoped pointer for Open Inventor nodes
  *
  * This file is a part of the CAD Viewer project
  *
@@ -16,32 +16,32 @@
  * GNU General Public License for more details.
  */
 
-#ifndef Util_SbScopedPtr_H
-#define Util_SbScopedPtr_H
+#ifndef Util_SoScopedPtr_H
+#define Util_SoScopedPtr_H
 
 namespace Util {
 
 template <typename T>
-class SbScopedPtr {
+class SoScopedPtr {
 public:
     typedef T* Pointer;
     typedef T& Reference;
     typedef const T& ConstReference;
 
-    SbScopedPtr() : ptr(0) {}
+    SoScopedPtr() : ptr(0) {}
 
     template <typename Tp>
-    SbScopedPtr(Tp p) {
+    SoScopedPtr(Tp p) {
         ptr = p;
         ptr->ref();
     }
 
-    SbScopedPtr(ConstReference other) {
+    SoScopedPtr(ConstReference other) {
         ptr = other.ptr();
         ptr->ref();
     }
 
-    SbScopedPtr& operator = (const SbScopedPtr& other) {
+    SoScopedPtr& operator = (const SoScopedPtr& other) {
         if (ptr) {
             ptr->unref();
         }
@@ -62,7 +62,7 @@ public:
         ptr->ref();
     }
 
-    ~SbScopedPtr() {
+    ~SoScopedPtr() {
         ptr->unref();
     }
 
@@ -89,4 +89,4 @@ private:
 
 }
 
-#endif // Util_SbScopedPtr_H
+#endif // Util_SoScopedPtr_H

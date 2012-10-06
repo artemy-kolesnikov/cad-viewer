@@ -20,21 +20,24 @@
 #define Modeling_Shape_H
 
 #include <boost/shared_ptr.hpp>
+#include <string>
+
+#include <TopoDS_Shape.hxx>
 
 namespace Modeling {
-
-namespace Impl {
-
-class ShapeImpl;
-
-}
 
 class Shape {
 public:
     typedef boost::shared_ptr<Shape> SharedPtr;
 
+    Shape(const TopoDS_Shape& aShape) : shape(aShape) {}
+
+    TopoDS_Shape getShape() const {
+        return shape;
+    }
+
 private:
-    boost::shared_ptr<Impl::ShapeImpl> pImpl;
+    TopoDS_Shape shape;
 };
 
 }

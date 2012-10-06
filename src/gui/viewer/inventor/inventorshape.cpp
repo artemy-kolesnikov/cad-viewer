@@ -299,7 +299,7 @@ void InventorShape::computeShape() {
 
     separator->addChild(faces);
 
-    /*SoGroup* edges = new SoGroup();
+    SoGroup* edges = new SoGroup();
     computeEdges(edges, shape->getShape());
 
     separator->addChild(edges);
@@ -307,7 +307,7 @@ void InventorShape::computeShape() {
     SoGroup* vertices = new SoGroup();
     computeVertices(vertices, shape->getShape());
 
-    separator->addChild(vertices);*/
+    separator->addChild(vertices);
 }
 
 }

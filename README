@@ -1,0 +1,9 @@
+CAD Viewer
+
+Simple CAD files viewer. Using OpenCASCADE for data model and Open Inventor for rendering.
+OpenCASCADE rendering also supported but doesn't work because of bug in OpenCASCADE 6.5.
+Supports data formats:
+ - BREP
+ - CSFDB
+ - IGES (Because of bug in OpenCASCADE 6.5 opening files of this format lead to program crash)
+ - STEP

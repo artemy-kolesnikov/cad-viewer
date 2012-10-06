@@ -49,8 +49,6 @@
 
 #include <vector>
 
-#include <QDebug>
-
 namespace {
 
 void getIndexedVerts(const TopoDS_Face& face, std::vector<SbVec3f>& vertices,

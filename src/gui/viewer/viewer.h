@@ -45,6 +45,13 @@ public:
     virtual const QWidget* getWidget() const = 0;
     virtual QWidget* getWidget() = 0;
 
+    virtual void viewFront() = 0;
+    virtual void viewBack() = 0;
+    virtual void viewTop() = 0;
+    virtual void viewBottom() = 0;
+    virtual void viewLeft() = 0;
+    virtual void viewRight() = 0;
+    virtual void viewAxometric() = 0;
     virtual void viewAll() = 0;
 
     static Viewer::SharedPtr create(Gui::Model::SharedPtr model);

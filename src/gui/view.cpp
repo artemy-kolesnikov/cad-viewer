@@ -16,7 +16,6 @@
 
 #include "view.h"
 
-#include <QDebug>
 #include <QHBoxLayout>
 
 #include <algorithm>
@@ -45,34 +44,32 @@ void View::createUI() {
 }
 
 void View::viewFront() {
-    //float root = sqrtf(2.0) / 2.0;
-    //viewer->setCameraOrientation(SbRotation(-root, 0, 0, -root));
+    viewer->viewFront();
     viewer->viewAll();
 }
 
 void View::viewBack() {
-    //float root = sqrtf(2.0) / 2.0;
-    //viewer->setCameraOrientation(SbRotation(0, root, root, 0));
+    viewer->viewBack();
     viewer->viewAll();
 }
 
 void View::viewTop() {
-    //viewer->setCameraOrientation(SbRotation(0, 0, 0, 1));
+    viewer->viewTop();
     viewer->viewAll();
 }
 
 void View::viewBottom() {
-    //viewer->setCameraOrientation(SbRotation(-1, 0, 0, 0));
+    viewer->viewBottom();
     viewer->viewAll();
 }
 
 void View::viewLeft() {
-    //viewer->setCameraOrientation(SbRotation(-0.5, 0, 0, -0.5));
+    viewer->viewLeft();
     viewer->viewAll();
 }
 
 void View::viewRight() {
-    //viewer->setCameraOrientation(SbRotation(0.5, 0, 0, 0.5));
+    viewer->viewRight();
     viewer->viewAll();
 }
 
@@ -81,8 +78,7 @@ void View::viewAll() {
 }
 
 void View::viewAxometric() {
-    //viewer->setCameraOrientation(SbRotation
-        //(-0.353553f, -0.146447f, -0.353553f, -0.853553f));
+    viewer->viewAxometric();
     viewer->viewAll();
 }
 

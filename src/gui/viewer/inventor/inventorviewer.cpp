@@ -51,6 +51,8 @@ public:
 
     void addShape(Shape::SharedPtr shape);
 
+    void setCameraOrientation(const SbRotation& rotation);
+
 private:
     static void eventCallback(void* data, SoEventCallback* callback);
     static void selectionCallback(void* data, SoPath* path);
@@ -93,6 +95,10 @@ void InventorViewerImpl::addShape(Shape::SharedPtr shape) {
     viewAll();
 }
 
+void InventorViewerImpl::setCameraOrientation(const SbRotation& rotation) {
+    getCamera()->orientation.setValue(rotation);
+}
+
 InventorViewer::InventorViewer(Gui::Model::SharedPtr model) :
     Viewer(model), impl(boost::make_shared<InventorViewerImpl>()) {
 }
@@ -103,6 +109,37 @@ const QWidget* InventorViewer::getWidget() const {
 
 QWidget* InventorViewer::getWidget() {
     return impl->getWidget();
+}
+
+void InventorViewer::viewFront() {
+    float root = sqrtf(2.0) / 2.0;
+    impl->setCameraOrientation(SbRotation(-root, 0, 0, -root));
+}
+
+void InventorViewer::viewBack() {
+    float root = sqrtf(2.0) / 2.0;
+    impl->setCameraOrientation(SbRotation(0, root, root, 0));
+}
+
+void InventorViewer::viewTop() {
+    impl->setCameraOrientation(SbRotation(0, 0, 0, 1));
+}
+
+void InventorViewer::viewBottom() {
+    impl->setCameraOrientation(SbRotation(-1, 0, 0, 0));
+}
+
+void InventorViewer::viewLeft() {
+    impl->setCameraOrientation(SbRotation(-0.5, 0, 0, -0.5));
+}
+
+void InventorViewer::viewRight() {
+    impl->setCameraOrientation(SbRotation(0.5, 0, 0, 0.5));
+}
+
+void InventorViewer::viewAxometric() {
+    impl->setCameraOrientation(SbRotation
+        (-0.353553f, -0.146447f, -0.353553f, -0.853553f));
 }
 
 void InventorViewer::viewAll() {

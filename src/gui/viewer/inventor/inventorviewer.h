@@ -38,6 +38,14 @@ public:
 
     virtual const QWidget* getWidget() const;
     virtual QWidget* getWidget();
+
+    virtual void viewFront();
+    virtual void viewBack();
+    virtual void viewTop();
+    virtual void viewBottom();
+    virtual void viewLeft();
+    virtual void viewRight();
+    virtual void viewAxometric();
     virtual void viewAll();
 
 private:

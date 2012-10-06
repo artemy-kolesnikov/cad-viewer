@@ -70,6 +70,10 @@ public:
             cascadeViewer(aViewer), firstPaint(true) {
     }
 
+    Handle(V3d_View) getView() const {
+        return view;
+    }
+
 protected:
     void paintEvent(QPaintEvent*);
 
@@ -156,7 +160,38 @@ QWidget* OpenCASCADEViewer::getWidget() {
     return viewerWidget.get();
 }
 
+void OpenCASCADEViewer::viewFront() {
+    viewerWidget->getView()->SetProj(V3d_Xpos);
+}
+
+void OpenCASCADEViewer::viewBack() {
+    viewerWidget->getView()->SetProj(V3d_Xneg);
+}
+
+void OpenCASCADEViewer::viewTop() {
+    viewerWidget->getView()->SetProj(V3d_Zpos);
+}
+
+void OpenCASCADEViewer::viewBottom() {
+    viewerWidget->getView()->SetProj(V3d_Zneg);
+}
+
+void OpenCASCADEViewer::viewLeft() {
+    viewerWidget->getView()->SetProj(V3d_Ypos);
+}
+
+void OpenCASCADEViewer::viewRight() {
+    viewerWidget->getView()->SetProj(V3d_Yneg);
+}
+
+void OpenCASCADEViewer::viewAxometric() {
+    viewerWidget->getView()->SetProj(V3d_XposYnegZpos);
+}
+
 void OpenCASCADEViewer::viewAll() {
+    viewerWidget->getView()->FitAll();
+    viewerWidget->getView()->ZFitAll();
+    viewerWidget->getView()->Redraw();
 }
 
 void OpenCASCADEViewer::shapeAdded(Modeling::Shape::SharedPtr shape) {

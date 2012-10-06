@@ -28,11 +28,12 @@
 #include <cassert>
 #include <boost/make_shared.hpp>
 
+#include "gui/actionlist.h"
 #include "gui/childwindow.h"
 #include "gui/model.h"
-#include "gui/view.h"
-#include "gui/actionlist.h"
 #include "gui/version.h"
+#include "gui/view.h"
+#include "modeling/fileloader.h"
 
 namespace Gui {
 
@@ -90,22 +91,21 @@ void MainWindow::about() {
 }
 
 void MainWindow::openModel() {
-    /*QString currentDir = QDir::currentPath();
+    QString currentDir = QDir::currentPath();
 
     QStringList files = QFileDialog::getOpenFileNames(
                          this,
-                         tr("Выберите один или несколько файлов"),
+                         tr("Choose one or several files"),
                          currentDir,
                          "Model files (*.csfdb *.iges *.brep *.rle *.step *.stl)\n"
-                         "Images (*.xwd *.bmp *.png *.jpeg *.jpg *.gif)\n"
                          "All files(*.*)");
 
     try {
         openFiles(files);
-    } catch(Common::FileException& err) {
-        QMessageBox::critical(this, tr("Ошибка"), err.what());
+    } catch(Modeling::FileLoaderException& err) {
+        QMessageBox::critical(this, tr("Error"), err.what());
         return;
-    }*/
+    }
 }
 
 ChildWindow* MainWindow::newChildWindow() {

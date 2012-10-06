@@ -45,17 +45,14 @@ public:
         return shapeList;
     }
 
-    void removeShape(Modeling::Shape::SharedPtr shape);
     void addShape(Modeling::Shape::SharedPtr shape);
 
 Q_SIGNALS:
     void shapeAdded(Modeling::Shape::SharedPtr shape);
-    void shapeRemoved(Modeling::Shape::SharedPtr shape);
     void fileNameChanged(QString& newFileName);
 
 public Q_SLOTS:
     void load(QString& fileName);
-    void save(QString& fileName);
 
 private:
     QString fileName;

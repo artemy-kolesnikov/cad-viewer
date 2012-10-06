@@ -1,5 +1,5 @@
 /*
- * model.cpp: Model class. Keeps loaded data
+ * fileloader.h: Class for loading shape from file
  *
  * This file is a part of the CAD Viewer project
  *
@@ -16,34 +16,27 @@
  * GNU General Public License for more details.
  */
 
-#include "model.h"
+#ifndef Modeling_FileLoader_H
+#define Modeling_FileLoader_H
 
-#include "modeling/fileloader.h"
+#include <list>
+#include <string>
 
-#include <boost/foreach.hpp>
+#include "modeling/shape.h"
+#include "util/exception.h"
 
-using Modeling::FileLoader;
-using Modeling::Shape;
+namespace Modeling {
 
-namespace Gui {
+class FileLoaderException : public Util::Exception {
+public:
+    FileLoaderException(const std::string& what) : Util::Exception(what) {}
+};
 
-void Model::load(QString& fileName) {
-    std::list<Shape::SharedPtr> shapes;
-    FileLoader::loadShapes(fileName.toStdString(), shapes);
-
-    BOOST_FOREACH(Shape::SharedPtr shape, shapes) {
-        addShape(shape);
-    }
-
-    this->fileName = fileName;
-
-    Q_EMIT fileNameChanged(fileName);
-}
-
-void Model::addShape(Modeling::Shape::SharedPtr shape) {
-    shapeList.push_back(shape);
-    Q_EMIT shapeAdded(shape);
-}
+class FileLoader {
+public:
+    static void loadShapes(const std::string& filePath, std::list<Shape::SharedPtr>& shapes);
+};
 
 }
 
+#endif // Modeling_FileLoader_H

@@ -26,13 +26,13 @@ namespace Util {
 
 class Exception : public std::exception {
 public:
-    Exception(const std::string& aWhat) : what(aWhat) {}
+    Exception(const std::string& what) : whatStr(what) {}
     ~Exception() throw() {}
 
-    const char* what() { return what.c_str(); }
+    const char* what() { return whatStr.c_str(); }
 
 private:
-    std::string what;
+    std::string whatStr;
 };
 
 }

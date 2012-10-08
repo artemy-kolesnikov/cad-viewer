@@ -29,6 +29,8 @@
 #include "util/soscopedptr.h"
 
 #include "gui/viewer/inventor/inventorshape.h"
+#include "gui/viewer/inventor/sobackgroundgradient.h"
+#include "gui/viewer/inventor/soaxes.h"
 
 using Modeling::Shape;
 
@@ -67,13 +69,20 @@ private:
 InventorViewerImpl::InventorViewerImpl() :
         inherited(0, "", FALSE,
         SoQtFullViewer::BUILD_NONE, SoQtViewer::EDITOR) {
-    setBackgroundColor(SbColor(0.39, 0.58, 0.93));
+    //setBackgroundColor(SbColor(0.39, 0.58, 0.93));
     setCamera(new SoOrthographicCamera());
 
     root = Util::SoScopedPtr<SoSelection>(new SoSelection());
     root->addSelectionCallback(&InventorViewerImpl::selectionCallback, this);
     root->addDeselectionCallback(&InventorViewerImpl::deselectionCallback, this);
     setSceneGraph(root.get());
+
+    SoBackgroundGradient* gradient = new SoBackgroundGradient();
+    gradient->setColorGradient(SbColor(0.0f, 0.1f, 0.3f), SbColor(0.7f, 0.7f, 0.8f));
+    root->addChild(gradient);
+
+    SoAxes* axes = new SoAxes();
+    root->addChild(axes);
 }
 
 void InventorViewerImpl::eventCallback(void* data, SoEventCallback* callback) {
@@ -99,8 +108,21 @@ void InventorViewerImpl::setCameraOrientation(const SbRotation& rotation) {
     getCamera()->orientation.setValue(rotation);
 }
 
+bool InventorViewer::inited = false;
+
+void InventorViewer::init() {
+    if (!inited) {
+        inited = true;
+
+        SoAxes::initClass();
+        SoBackgroundGradient::initClass();
+    }
+}
+
 InventorViewer::InventorViewer(Gui::Model::SharedPtr model) :
-    Viewer(model), impl(boost::make_shared<InventorViewerImpl>()) {
+        Viewer(model) {
+    init();
+    impl = boost::make_shared<InventorViewerImpl>();
 }
 
 const QWidget* InventorViewer::getWidget() const {

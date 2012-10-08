@@ -114,14 +114,61 @@ void getIndexedVerts(const TopoDS_Face& face, std::vector<SbVec3f>& vertices,
     }
 }
 
-void computeEdges(SoGroup* edgeRoot, const TopoDS_Shape &shape) {
+}
+
+namespace Gui {
+namespace Viewer {
+namespace Inventor {
+
+InventorShape::InventorShape(Modeling::Shape::SharedPtr aShape) : shape(aShape) {
+    group.reset(new SoGroup());
+
+    separator.reset(new SoSeparator());
+    group->addChild(separator.get());
+
+    computeShape();
+}
+
+SoGroup* InventorShape::getGroup() const {
+    return group.get();
+}
+
+void InventorShape::computeShape() {
+    Bnd_Box bounds;
+    BRepBndLib::Add(shape->getShape(), bounds);
+    bounds.SetGap(0.0);
+    Standard_Real xMin, yMin, zMin, xMax, yMax, zMax;
+    bounds.Get(xMin, yMin, zMin, xMax, yMax, zMax);
+    Standard_Real deflection = ((xMax-xMin)+(yMax-yMin)+(zMax-zMin))/300.0 * 0.2;
+    BRepMesh::Mesh(shape->getShape(), deflection);
+
+    SoGroup* faces = new SoGroup();
+
+    computeFaces(faces);
+
+    separator->addChild(faces);
+
+    SoGroup* edges = new SoGroup();
+    computeEdges(edges);
+
+    separator->addChild(edges);
+
+    SoGroup* vertices = new SoGroup();
+    computeVertices(vertices);
+
+    separator->addChild(vertices);
+}
+
+void InventorShape::computeEdges(SoGroup* edgeRoot) {
+    TopoDS_Shape topoShape = shape->getShape();
+
     // get a indexed map of edges
     TopTools_IndexedMapOfShape mapOfShape;
-    TopExp::MapShapes(shape, TopAbs_EDGE, mapOfShape);
+    TopExp::MapShapes(topoShape, TopAbs_EDGE, mapOfShape);
 
     // build up map edge->face
     TopTools_IndexedDataMapOfShapeListOfShape edge2Face;
-    TopExp::MapShapesAndAncestors(shape, TopAbs_EDGE, TopAbs_FACE, edge2Face);
+    TopExp::MapShapesAndAncestors(topoShape, TopAbs_EDGE, TopAbs_FACE, edge2Face);
 
     const size_t lastShapeIndex = mapOfShape.Extent();
 
@@ -213,9 +260,11 @@ void computeEdges(SoGroup* edgeRoot, const TopoDS_Shape &shape) {
     }
 }
 
-void computeVertices(SoGroup* vertexRoot, const TopoDS_Shape &shape) {
+void InventorShape::computeVertices(SoGroup* vertexRoot) {
+    TopoDS_Shape topoShape = shape->getShape();
+
     TopTools_IndexedMapOfShape mapOfShape;
-    TopExp::MapShapes(shape, TopAbs_VERTEX, mapOfShape);
+    TopExp::MapShapes(topoShape, TopAbs_VERTEX, mapOfShape);
 
     const size_t lastShapeIndex = mapOfShape.Extent();
     for (size_t shapeIndex = 1; shapeIndex <= lastShapeIndex; ++shapeIndex) {
@@ -237,10 +286,12 @@ void computeVertices(SoGroup* vertexRoot, const TopoDS_Shape &shape) {
     }
 }
 
-void computeFaces(SoGroup* faceRoot, const TopoDS_Shape &shape) {
+void InventorShape::computeFaces(SoGroup* faceRoot) {
+    TopoDS_Shape topoShape = shape->getShape();
+
     TopExp_Explorer explorer;
 
-    for (explorer.Init(shape, TopAbs_FACE); explorer.More(); explorer.Next()) {
+    for (explorer.Init(topoShape, TopAbs_FACE); explorer.More(); explorer.Next()) {
         const TopoDS_Face& face = TopoDS::Face(explorer.Current());
 
         std::vector<SbVec3f> vertices;
@@ -263,50 +314,6 @@ void computeFaces(SoGroup* faceRoot, const TopoDS_Shape &shape) {
     }
 }
 
-}
-
-namespace Gui {
-namespace Viewer {
-namespace Inventor {
-
-InventorShape::InventorShape(Modeling::Shape::SharedPtr aShape) : shape(aShape) {
-    group.reset(new SoGroup());
-
-    separator.reset(new SoSeparator());
-    group->addChild(separator.get());
-
-    computeShape();
-}
-
-SoGroup* InventorShape::getGroup() const {
-    return group.get();
-}
-
-void InventorShape::computeShape() {
-    Bnd_Box bounds;
-    BRepBndLib::Add(shape->getShape(), bounds);
-    bounds.SetGap(0.0);
-    Standard_Real xMin, yMin, zMin, xMax, yMax, zMax;
-    bounds.Get(xMin, yMin, zMin, xMax, yMax, zMax);
-    Standard_Real deflection = ((xMax-xMin)+(yMax-yMin)+(zMax-zMin))/300.0 * 0.2;
-    BRepMesh::Mesh(shape->getShape(), deflection);
-
-    SoGroup* faces = new SoGroup();
-
-    computeFaces(faces, shape->getShape());
-
-    separator->addChild(faces);
-
-    SoGroup* edges = new SoGroup();
-    computeEdges(edges, shape->getShape());
-
-    separator->addChild(edges);
-
-    SoGroup* vertices = new SoGroup();
-    computeVertices(vertices, shape->getShape());
-
-    separator->addChild(vertices);
-}
 
 }
 }

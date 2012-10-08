@@ -27,8 +27,6 @@
 #include "modeling/shape.h"
 #include "util/soscopedptr.h"
 
-class SoGroup;
-
 namespace Gui {
 namespace Viewer {
 namespace Inventor {
@@ -42,9 +40,9 @@ public:
 
 private:
     void computeShape();
-    /*void computeEdges(SoGroup* edgeRoot, const TopoDS_Shape &shape);
-    void computeVertices(SoGroup* vertexRoot, const TopoDS_Shape &shape);
-    void computeFaces(SoGroup* faceRoot, const TopoDS_Shape &shape, double deflection);*/
+    void computeEdges(SoGroup* edgeRoot);
+    void computeVertices(SoGroup* vertexRoot);
+    void computeFaces(SoGroup* faceRoot);
 
 private:
     Modeling::Shape::SharedPtr shape;

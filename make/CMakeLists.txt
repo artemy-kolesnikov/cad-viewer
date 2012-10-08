@@ -8,7 +8,7 @@ find_package(Qt4 REQUIRED)
 
 include(${QT_USE_FILE})
 
-set (CMAKE_BUILD_TYPE "Release")
+set (CMAKE_BUILD_TYPE "Debug")
 
 set (SRC_DIR ../src)
 set (RES_DIR ../res)
@@ -31,10 +31,13 @@ set(SOURCES
     ${SRC_DIR}/gui/view.cpp
     ${SRC_DIR}/gui/viewer/inventor/inventorshape.cpp
     ${SRC_DIR}/gui/viewer/inventor/inventorviewer.cpp
+    ${SRC_DIR}/gui/viewer/inventor/sobackgroundgradient.cpp
+    ${SRC_DIR}/gui/viewer/inventor/soaxes.cpp
     ${SRC_DIR}/gui/viewer/occ/opencascadeviewer.cpp
     ${SRC_DIR}/gui/viewer/viewer.cpp
     ${SRC_DIR}/main.cpp
     ${SRC_DIR}/modeling/fileloader.cpp
+    ${SRC_DIR}/modeling/shape.cpp
     ${CAD_RCS}
 )
 

@@ -30,14 +30,33 @@ class Shape {
 public:
     typedef boost::shared_ptr<Shape> SharedPtr;
 
-    Shape(const TopoDS_Shape& aShape) : shape(aShape) {}
+    Shape(const TopoDS_Shape& aShape);
 
     TopoDS_Shape getShape() const {
-        return shape;
+        return topoShape;
+    }
+
+    size_t getFacesNum() const {
+        return facesNum;
+    }
+
+    size_t getEdgesNum() const {
+        return edgesNum;
+    }
+
+    size_t getVertsNum() const {
+        return vertsNum;
     }
 
 private:
-    TopoDS_Shape shape;
+    void computeNumbers();
+
+private:
+    TopoDS_Shape topoShape;
+
+    size_t facesNum;
+    size_t edgesNum;
+    size_t vertsNum;
 };
 
 }

@@ -48,11 +48,15 @@ public:
     virtual void viewAxometric();
     virtual void viewAll();
 
+    static void init();
+
 private:
     virtual void shapeAdded(Modeling::Shape::SharedPtr shape);
 
 private:
     boost::shared_ptr<InventorViewerImpl> impl;
+
+    static bool inited;
 };
 
 }
